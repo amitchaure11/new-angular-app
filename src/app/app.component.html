@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <h1 class="text-center">User List</h1>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">First Name</th>
+            <th class="text-center">Last Name</th>
+            <th class="text-center">Phone Number</th>
+            <th class="text-center">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.phone }}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm mr-2" (click)="showEditUserForm(user)">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeUser(user)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-success" (click)="showAddUserForm()">Add New User</button>
+
+      <div class="mt-4">
+        <form *ngIf="userForm" #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && saveUser(newUser)" novalidate>
+          <h2>Add New User</h2>
+          <div class="form-group col-6">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" placeholder="Enter First Name" name="firstName" required  #name="ngModel" [(ngModel)]="newUser.firstName">
+            <span class="text-danger"
+                *ngIf="(name.touched || registerForm.submitted) && name.errors?.required">
+                First Name is required
+            </span>
+          </div>
+          <div class="form-group col-6">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" placeholder="Enter last Name" name="lastName" required  #lastName="ngModel" [(ngModel)]="newUser.lastName">
+            <span class="text-danger"
+                *ngIf="(lastName.touched || registerForm.submitted) && lastName.errors?.required">
+                Last Name is required
+            </span>
+          </div>
+          <div class="form-group col-6">
+            <label for="phone">Phone Number</label>
+            <input type="number" class="form-control" placeholder="Enter Phone Number" name="phone" required  #phone="ngModel" [(ngModel)]="newUser.phone">
+            <span class="text-danger"
+                *ngIf="(phone.touched || registerForm.submitted) && phone.errors?.required">
+                Phone Number is required
+            </span>
+          </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button type="button" class="btn btn-warning" (click)="cancelNewUser()">Cancel</button>
+        </form>
+
+        <form *ngIf="editUserForm"  #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && updateUser()" novalidate>
+          <h2>Edit User Details</h2>
+          
+          <div class="form-group col-6">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" placeholder="Enter First Name" name="firstName" required  #name="ngModel" [(ngModel)]="editedUser.firstName">
+            <span class="text-danger"
+                *ngIf="(name.touched || registerForm.submitted) && name.errors?.required">
+                First Name is required
+            </span>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" placeholder="Enter Last Name" name="lastName" required  #lastName="ngModel" [(ngModel)]="editedUser.lastName">
+            <span class="text-danger"
+                *ngIf="(lastName.touched || registerForm.submitted) && lastName.errors?.required">
+                Last Name is required
+            </span>
+          </div>
+
+          <div class="form-group col-6">
+            <label for="phone">Phone Number</label>
+            <input type="text" class="form-control" placeholder="Enter Phone Number" name="phone" required  #phone="ngModel" [(ngModel)]="editedUser.phone">
+            <span class="text-danger"
+                *ngIf="(phone.touched || registerForm.submitted) && phone.errors?.required">
+                Phone Number is required
+            </span>
+          </div>
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
